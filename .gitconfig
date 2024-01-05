@@ -1,18 +1,23 @@
 [alias]
   am = commit --all --amend
-  ci = !git add --all && git commit --message
+  amn = commit --all --ammend --no-edit
+  brm = "!f() { git branch --delete ${1} && git p :${1}; }; f"
+  ci = !git commit --message
   cleanup = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
   cls = clean -d --force .
   co = checkout
   cob = switch -c
   cp = cherry-pick
+  cpa = cherry-pick --abort
   default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-  done = "!DEF=$(git default); f() { DEFAULT=$(git default); echo "Def ${1-DEF} -- DEFA ${1-DEFAULT}"; git co ${1-DEFAULT} && git up && git cleanup ${1-DEFAULT}; }; f"
+  done = "!DEF=$(git default); f() { DEFAULT=$(git default); echo "Def ${1-DEF} -- DEF ${1-DEFAULT}"; git co ${1-DEFAULT} && git up && git cleanup ${1-DEFAULT}; }; f"
   ec = config --edit --global
   fixup = "!f() { git rebase --interactive HEAD~$1; }; f"
   ini = "!f() { git init --initial-branch=main; git commit --allow-empty --message='Initial commit'; git remote add origin https://github.com/${1}.git; }; f"
   lg = log --decorate --numstat --pretty='%C(yellow)%hCred%d %Creset%s%Cblue [%cn]'
   ln = log --date=short --decorate --graph --oneline --pretty=format:'%<|(7)%C(yellow)%h %Creset%s%Cgreen [%an%Creset - %Cblue%ad%Cgreen] %Cred%d'
+  p = push --set-upstream origin
+  rbi = "!f() { git rebase --interactive HEAD~$1; }; f"
   s  = switch
   sc = switch -c
   st = status --branch --short --show-stash
@@ -22,41 +27,41 @@
   wipe = "!git wip WIPE-SAVEPOINT && git reset HEAD~1 --hard"
 
 [color]
-	branch = auto
-	diff = auto
-	interactive = auto
-	pager = true
-	status = auto
-	ui = true
+  branch = auto
+  diff = auto
+  interactive = auto
+  pager = true
+  status = auto
+  ui = true
 
 [color "diff"]
-	commit = yellow bold
-	frag = magenta bold
-	func = 146 bold
-	meta = 11
-	new = green bold
-	old = red bold
-	whitespace = red reverse
+  commit = yellow bold
+  frag = magenta bold
+  func = 146 bold
+  meta = 11
+  new = green bold
+  old = red bold
+  whitespace = red reverse
 
 [color "diff-highlight"]
-	newHighlight = green bold 22
-	newNormal = green bold
-	oldHighlight = red bold 52
-	oldNormal = red bold
+  newHighlight = green bold 22
+  newNormal = green bold
+  oldHighlight = red bold 52
+  oldNormal = red bold
 
 [core]
-	editor = vi
+  editor = vi
   pager = diff-so-fancy | less --tabs=2 -RFX
 
 [interactive]
   diffFilter = diff-so-fancy --patch
 
 [pager]
-	show = diff-so-fancy | less --tabs=1,5 -RFX
+  show = diff-so-fancy | less --tabs=1,5 -RFX
 
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 
 [user]
-	email = alejo@imprivata.com
-	name = Alejandro Castro
+  email = alejo@imprivata.com
+  name = Alejandro Castro
