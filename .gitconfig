@@ -1,26 +1,25 @@
 [alias]
-    am = commit --all --amend
-    ci = !git add --all && git commit --message 
-    cleanup = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
-    cls = clean -d --force .
-    co = checkout
-    cob = switch -c
-    cp = cherry-pick
-    default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-    done = "!DEF=$(git default); f() { DEFAULT=$(git default); echo "Def ${1-DEF} -- DEFA ${1-DEFAULT}"; git co ${1-DEFAULT} && git up && git cleanup ${1-DEFAULT}; }; f"
-    ec = config --edit --global
-    fixup = "!f() { git rebase --interactive HEAD~$1; }; f"
-    ini = "!f() { git init --initial-branch=main; git commit --allow-empty --message='Initial commit'; git remote add origin https://github.com/${1}.git; }; f"
-	lg = log --decorate --numstat --pretty='%C(yellow)%hCred%d %Creset%s%Cblue [%cn]'
-	ln = log --date=short --decorate --graph --oneline --pretty=format:'%<|(7)%C(yellow)%h %Creset%s%Cgreen [%an%Creset - %Cblue%ad%Cgreen] %Cred%d'
-	s  = switch
-	sc = switch -c
-	st = status --branch --short --show-stash
-    undo = !git reset HEAD~1 --mixed && git restore --staged .
-    up = !git pull --prune --rebase $@
-    wip = "!f() { msg=${1-WIP}; git commit --all --message $msg; }; f"
-    wipe = "!git wip WIPE-SAVEPOINT && git reset HEAD~1 --hard"
-    say = "!f() { msg=${1-Hello World}; echo $msg; }; f"
+  am = commit --all --amend
+  ci = !git add --all && git commit --message
+  cleanup = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
+  cls = clean -d --force .
+  co = checkout
+  cob = switch -c
+  cp = cherry-pick
+  default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+  done = "!DEF=$(git default); f() { DEFAULT=$(git default); echo "Def ${1-DEF} -- DEFA ${1-DEFAULT}"; git co ${1-DEFAULT} && git up && git cleanup ${1-DEFAULT}; }; f"
+  ec = config --edit --global
+  fixup = "!f() { git rebase --interactive HEAD~$1; }; f"
+  ini = "!f() { git init --initial-branch=main; git commit --allow-empty --message='Initial commit'; git remote add origin https://github.com/${1}.git; }; f"
+  lg = log --decorate --numstat --pretty='%C(yellow)%hCred%d %Creset%s%Cblue [%cn]'
+  ln = log --date=short --decorate --graph --oneline --pretty=format:'%<|(7)%C(yellow)%h %Creset%s%Cgreen [%an%Creset - %Cblue%ad%Cgreen] %Cred%d'
+  s  = switch
+  sc = switch -c
+  st = status --branch --short --show-stash
+  undo = !git reset HEAD~1 --mixed && git restore --staged .
+  up = !git pull --prune --rebase $@
+  wip = "!f() { msg=${1-WIP}; git commit --all --message $msg; }; f"
+  wipe = "!git wip WIPE-SAVEPOINT && git reset HEAD~1 --hard"
 
 [color]
 	branch = auto
@@ -47,10 +46,10 @@
 
 [core]
 	editor = vi
-    pager = diff-so-fancy | less --tabs=2 -RFX
+  pager = diff-so-fancy | less --tabs=2 -RFX
 
 [interactive]
-    diffFilter = diff-so-fancy --patch
+  diffFilter = diff-so-fancy --patch
 
 [pager]
 	show = diff-so-fancy | less --tabs=1,5 -RFX
