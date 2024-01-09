@@ -3,14 +3,14 @@
   amn = commit --all --ammend --no-edit
   brm = "!f() { git branch --delete ${1} && git p :${1}; }; f"
   ci = !git commit --message
-  cleanup = "!f() { DEFAULT=$(git default); git branch --merged ${1-$DEFAULT} | grep -v " ${1-$DEFAULT}$" | xargs git branch -d; }; f"
+  cleanup = "!f() { git branch --merged ${1} | grep -v "${1}$" | xargs git branch -d; }; f"
   cls = clean -d --force .
   co = checkout
   cob = switch -c
   cp = cherry-pick
   cpa = cherry-pick --abort
   default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
-  done = "!DEF=$(git default); f() { DEFAULT=$(git default); echo "Def ${1-DEF} -- DEF ${1-DEFAULT}"; git co ${1-DEFAULT} && git up && git cleanup ${1-DEFAULT}; }; f"
+  done = "!DEF=$(git default); f() { git co ${1-DEF} && git up && git cleanup ${1-DEF}; }; f"
   ec = config --edit --global
   fixup = "!f() { git rebase --interactive HEAD~$1; }; f"
   ini = "!f() { git init --initial-branch=main; git commit --allow-empty --message='Initial commit'; git remote add origin https://github.com/${1}.git; }; f"
