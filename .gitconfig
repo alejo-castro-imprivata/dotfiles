@@ -10,9 +10,11 @@
   cp = cherry-pick
   cpa = cherry-pick --abort
   default = !git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@'
+  d = difftool
   done = "!DEF=$(git default); f() { git co ${1-DEF} && git up && git cleanup ${1-DEF}; }; f"
   ec = config --edit --global
   fixup = "!f() { git rebase --interactive HEAD~$1; }; f"
+  gone = "!f() { git fetch --all --prune; git branch -vv | awk '/:gone]/{print $1}' | xargs git branch -D; }; f"
   ini = "!f() { git init --initial-branch=main; git commit --allow-empty --message='Initial commit'; git remote add origin https://github.com/${1}.git; }; f"
   lg = log --decorate --numstat --pretty='%C(yellow)%hCred%d %Creset%s%Cblue [%cn]'
   ln = log --date=short --decorate --graph --oneline --pretty=format:'%<|(7)%C(yellow)%h %Creset%s%Cgreen [%an%Creset - %Cblue%ad%Cgreen] %Cred%d'
@@ -21,6 +23,7 @@
   s  = switch
   sc = switch -c
   st = status --branch --short --show-stash
+  sw = "!f() { git show ${1-HEAD} --ext-diff; }; f"
   undo = !git reset HEAD~1 --mixed && git restore --staged .
   up = !git pull --prune --rebase $@
   wip = "!f() { msg=${1-WIP}; git commit --all --message $msg; }; f"
@@ -34,33 +37,34 @@
   status = auto
   ui = true
 
-[color "diff"]
-  commit = yellow bold
-  frag = magenta bold
-  func = 146 bold
-  meta = 11
-  new = green bold
-  old = red bold
-  whitespace = red reverse
-
-[color "diff-highlight"]
-  newHighlight = green bold 22
-  newNormal = green bold
-  oldHighlight = red bold 52
-  oldNormal = red bold
-
 [core]
   editor = vi
   pager = diff-so-fancy | less --tabs=2 -RFX
 
+[diff]
+  external = difft
+  tool = difftastic
+
+[difftool]
+  prompt = false
+
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+
+[init]
+  defaultBranch = main
+
 [interactive]
-  diffFilter = diff-so-fancy --patch
+  diffFilter = difft
 
 [pager]
-  show = diff-so-fancy | less --tabs=1,5 -RFX
+  difftool = true
 
 [push]
   autoSetupRemote = true
+
+[rerere]
+	enabled = true
 
 [user]
   email = alejo@imprivata.com
